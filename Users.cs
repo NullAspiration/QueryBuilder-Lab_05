@@ -1,0 +1,23 @@
+﻿namespace QueryBuilder
+{
+    public class Users
+    {
+        public int Id { get; set; }
+        public string UserName { get; set; }
+        public string UserAddress { get; set; }
+        public string OtherUserDetails { get; set; }
+        public string AmountOfFine { get; set; }
+        public string PhoneNumber { get; set; }
+
+        public Users() { }
+        public Users(int id, string userName, string userAddress, string otherUserDetails, string amountOfFine, string phoneNumber)
+        {
+            Id = id;
+            UserName = userName;
+            UserAddress = userAddress;
+            OtherUserDetails = otherUserDetails;
+            AmountOfFine = amountOfFine;
+            PhoneNumber = phoneNumber;
+        }
+    }
+}
