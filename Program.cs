@@ -37,8 +37,6 @@ namespace QueryBuilder
 
 
 
-
-
             //reads Books.csv
             Console.WriteLine("|__________Reading Books.csv________________|" + "\n");
             var booklist = ReadBooksFromCSV();
@@ -52,10 +50,6 @@ namespace QueryBuilder
             //reads all Books from database
             Console.WriteLine("|__________Reading Books From DB____________|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Books>());
-
-
-
-
 
 
 
@@ -77,10 +71,6 @@ namespace QueryBuilder
 
 
 
-
-
-
-
             //reads Categories.csv
             Console.WriteLine("|__________Reading Categories.csv___________|" + "\n");
             var categorieslist = ReadCategoriesFromCSV();
@@ -94,11 +84,6 @@ namespace QueryBuilder
             //reads all Categories from database
             Console.WriteLine("|__________Reading Categories From DB_______|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Categories>());
-
-
-
-
-
 
 
 
@@ -117,8 +102,6 @@ namespace QueryBuilder
             Console.WriteLine("|__________Reading BooksOutOnLoan From DB___|" + "\n");
             Console.WriteLine(dbOp.ReadAll<BooksOutOnLoan>());
         }
-
-
 
 
 
@@ -304,7 +287,7 @@ namespace QueryBuilder
 
 
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
 
@@ -331,7 +314,7 @@ namespace QueryBuilder
 
 
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
 
@@ -358,7 +341,7 @@ namespace QueryBuilder
 
 
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
 
@@ -389,7 +372,7 @@ namespace QueryBuilder
                     command.Parameters.AddWithValue("$PhoneNumber", u.PhoneNumber).SqliteType = SqliteType.Text;
 
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
 
