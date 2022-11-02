@@ -1,10 +1,12 @@
 ﻿using Microsoft.Data.Sqlite;
+using System.Data;
+
 namespace QueryBuilder
 {
 
     public class DataOperations : IDisposable
     {
-        private readonly SqliteConnection connection;
+        private SqliteConnection connection;
         /// <summary>
         /// Opens connenction to DB upon creation of object
         /// </summary>
@@ -22,7 +24,7 @@ namespace QueryBuilder
         /// <returns></returns>
         public string ReadAll<T>() where T : new()
         {
-            var dataString = "";
+            var dataString = " ";
             //create command
             var command = connection.CreateCommand();
 

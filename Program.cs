@@ -2,7 +2,7 @@
 {
     public class Program
     {
-        static readonly string CONNECTION_STRING = "Data Source = " + ProjectRoot.Root + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "QueryBuilderDB.db";
+        static string CONNECTION_STRING = "Data Source = " + ProjectRoot.Root + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "QueryBuilderDB.db";
         static void Main(string[] args)
         {
             if (args is null)
@@ -13,13 +13,15 @@
 
             //DataOPs uses IDisposeable, Dispose() is automatically called (so using is used)
             using var dbOp = new DataOperations(CONNECTION_STRING);
+            
+            
             Console.WriteLine("|__________Reading Users.csv________________|" + "\n");
             var userlist = ReadUsersFromCSV();
             userlist.Sort();
-            foreach (var user in userlist)
+            foreach (var u in userlist)
             {
-                Console.WriteLine(user);
-                Console.WriteLine("-----------------");
+                Console.WriteLine(u);
+                Console.WriteLine("|___________________________________________|");
             }
 
 
@@ -39,9 +41,9 @@
             Console.WriteLine("|__________Reading BooksOutOnLoan___________|" + "\n");
             Console.WriteLine(dbOp.ReadAll<BooksOutOnLoan>());
         }
-        public static List<Users> ReadUsersFromCSV()
+        static List<Users> ReadUsersFromCSV()
         {
-            Console.WriteLine("Source Dir: " + ProjectRoot.Root);
+            Console.WriteLine("Source Dir: " + ProjectRoot.Root + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "Users.csv");
             var userlist = new List<Users>();
             using (var reader = new StreamReader(ProjectRoot.Root + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "Users.csv"))
             {
@@ -54,8 +56,6 @@
 
                         // split the string on the delimiter (,)
                         var values = line.Split(",");
-
-
                         userlist.Add(new Users(int.Parse(values[0]), values[1], values[2], values[3], values[4], values[5], values[6]));
                     }
                 }
