@@ -46,7 +46,7 @@ namespace QueryBuilder
             Console.WriteLine("|__________Reading Users From DB____________|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Users>());
 
-
+            ClearAllFromDB();
             //reads Books.csv
             Console.WriteLine("|__________Reading Books.csv________________|" + "\n");
             var booklist = ReadBooksFromCSV();
@@ -62,7 +62,7 @@ namespace QueryBuilder
             Console.WriteLine("|__________Reading Books From DB____________|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Books>());
 
-
+     
             //reads Authors.csv
             Console.WriteLine("|__________Reading Author.csv________________|" + "\n");
             var authorlist = ReadAuthorFromCSV();
@@ -252,8 +252,8 @@ namespace QueryBuilder
                     command.CommandType = System.Data.CommandType.Text;
 
                     command.Parameters.AddWithValue("$Id", a.Id).SqliteType = SqliteType.Integer;
-                    command.Parameters.AddWithValue("$UserName", a.FirstName).SqliteType = SqliteType.Text;
-                    command.Parameters.AddWithValue("$UserAddress", a.SurName).SqliteType = SqliteType.Text;
+                    command.Parameters.AddWithValue("$FirstName", a.FirstName).SqliteType = SqliteType.Text;
+                    command.Parameters.AddWithValue("$SurName", a.SurName).SqliteType = SqliteType.Text;
 
                     command.ExecuteNonQuery();
                     connection.Close();
@@ -279,8 +279,8 @@ namespace QueryBuilder
                     command.CommandType = System.Data.CommandType.Text;
 
                     command.Parameters.AddWithValue("$Id", b.Id).SqliteType = SqliteType.Integer;
-                    command.Parameters.AddWithValue("$UserName", b.Title).SqliteType = SqliteType.Text;
-                    command.Parameters.AddWithValue("$UserAddress", b.Isbn).SqliteType = SqliteType.Text;
+                    command.Parameters.AddWithValue("Title", b.Title).SqliteType = SqliteType.Text;
+                    command.Parameters.AddWithValue("Isbn", b.Isbn).SqliteType = SqliteType.Text;
 
 
                     command.ExecuteNonQuery();
@@ -384,7 +384,7 @@ namespace QueryBuilder
                 AddUsersToDB(u);
             }
         }
-        //loops through and adds all users from csv to DB
+        //loops through and adds all Author from csv to DB
         static void AddAllAuthor(List<Author> authordb)
         {
             foreach (var a in authordb)
@@ -476,6 +476,27 @@ namespace QueryBuilder
             {
                 connection.Open();
                 using (var command = new SqliteCommand(@"DELETE FROM Users", connection))
+                {
+                    command.CommandType = System.Data.CommandType.Text;
+                    command.ExecuteNonQuery();
+                    connection.Close();
+                }
+            }
+        }
+        static void ClearAllFromDB()
+        {
+            using (var connection = new SqliteConnection(CONNECTION_STRING))
+            {
+                connection.Open();
+                var commandText =
+                    @"
+                        DELETE FROM Author;
+                        DELETE FROM Books;
+                        DELETE FROM BooksOutOnLoan;
+                        DELETE FROM Categories;
+                        DELETE FROM Users;
+                     ";
+                using (var command = new SqliteCommand(commandText, connection))
                 {
                     command.CommandType = System.Data.CommandType.Text;
                     command.ExecuteNonQuery();

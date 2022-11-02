@@ -35,15 +35,7 @@ namespace QueryBuilder
 
             while (reader.Read())
             {
-                dataString += typeof(T).Name +
-                    reader.GetString(0) +
-                    reader.GetString(1) +
-                    reader.GetString(2) +
-                    reader.GetString(3) +
-                    reader.GetString(4) +
-                    reader.GetString(5) +
-                    reader.GetString(6) +
-                    "\n";
+                dataString += typeof(T).Name + reader.GetString(0) + "\n";
             }
 
             return dataString;
