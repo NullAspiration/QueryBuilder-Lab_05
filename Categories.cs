@@ -2,8 +2,8 @@
 {
     internal class Categories : IComparable
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
+        public int Id { get; init; }
+        public string Name { get; init; }
         public Categories() { }
         public Categories(int id, string name)
         {
@@ -14,8 +14,8 @@
         {
             return
                 $"Id:\t\t\t{Id}\n" +
-                $"FirstName:\t\t{Name}\n";
-                
+                $"Categorie:\t\t{Name}\n";
+
 
         }
         public int CompareTo(object? obj)

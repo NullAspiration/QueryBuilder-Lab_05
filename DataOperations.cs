@@ -1,12 +1,11 @@
 ﻿using Microsoft.Data.Sqlite;
-using System.Data;
 
 namespace QueryBuilder
 {
 
     public class DataOperations : IDisposable
     {
-        private SqliteConnection connection;
+        public SqliteConnection connection;
         /// <summary>
         /// Opens connenction to DB upon creation of object
         /// </summary>
@@ -24,7 +23,7 @@ namespace QueryBuilder
         /// <returns></returns>
         public string ReadAll<T>() where T : new()
         {
-            var dataString = " ";
+            var dataString = "";
             //create command
             var command = connection.CreateCommand();
 
@@ -36,7 +35,15 @@ namespace QueryBuilder
 
             while (reader.Read())
             {
-                dataString += typeof(T).Name + " " + reader.GetString(0)  + "\n";
+                dataString += typeof(T).Name + 
+                    reader.GetString(0) + 
+                    reader.GetString(1) +
+                    reader.GetString(2) +
+                    reader.GetString(3) +
+                    reader.GetString(4) +
+                    reader.GetString(5) +
+                    reader.GetString(6) +
+                    "\n";
             }
 
             return dataString;
