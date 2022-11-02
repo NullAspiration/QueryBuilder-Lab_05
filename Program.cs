@@ -17,6 +17,9 @@ namespace QueryBuilder
             //DataOPs uses IDisposeable, Dispose() is automatically called (so using is used)
             using var dbOp = new DataOperations(CONNECTION_STRING);
 
+            //Clears the database
+            ClearAllFromDB();
+
             //reads Users.csv
             Console.WriteLine("|__________Reading Users.csv________________|" + "\n");
             var userlist = ReadUsersFromCSV();
@@ -26,27 +29,16 @@ namespace QueryBuilder
                 Console.WriteLine(u);
                 Console.WriteLine("|___________________________________________|");
             }
-            try
-            {
-                ClearUsersFromDB();
-                //test add to db
-                Console.WriteLine("Adding test User...");
-                Users testuser = new Users(0, "testname", "testaddress", "miscdetails", "$1000", "numail@nomail.com", "(555) 5555555");
-                AddUsersToDB(testuser);
-                Console.WriteLine("TEST Success!");
-                ClearUsersFromDB();
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e.Message);
-            }
-
             AddAllUsers(userlist);
             //reads all users from database
             Console.WriteLine("|__________Reading Users From DB____________|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Users>());
 
-            ClearAllFromDB();
+
+
+
+
+
             //reads Books.csv
             Console.WriteLine("|__________Reading Books.csv________________|" + "\n");
             var booklist = ReadBooksFromCSV();
@@ -56,13 +48,18 @@ namespace QueryBuilder
                 Console.WriteLine(b);
                 Console.WriteLine("|___________________________________________|");
             }
-
             AddAllBooks(booklist);
             //reads all Books from database
             Console.WriteLine("|__________Reading Books From DB____________|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Books>());
 
-     
+
+
+
+
+
+
+
             //reads Authors.csv
             Console.WriteLine("|__________Reading Author.csv________________|" + "\n");
             var authorlist = ReadAuthorFromCSV();
@@ -77,6 +74,13 @@ namespace QueryBuilder
             Console.WriteLine("|__________Reading Author From DB___________|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Author>());
 
+
+
+
+
+
+
+
             //reads Categories.csv
             Console.WriteLine("|__________Reading Categories.csv___________|" + "\n");
             var categorieslist = ReadCategoriesFromCSV();
@@ -86,23 +90,39 @@ namespace QueryBuilder
                 Console.WriteLine(c);
                 Console.WriteLine("|___________________________________________|");
             }
+            AddAllCategories(categorieslist);
             //reads all Categories from database
             Console.WriteLine("|__________Reading Categories From DB_______|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Categories>());
 
+
+
+
+
+
+
+
+
             //reads BooksOutOnLoan.csv
-            Console.WriteLine("|__________Reading Categories.csv___________|" + "\n");
+            Console.WriteLine("|__________Reading BooksOutOnLoan.csv___________|" + "\n");
             var booksoutonloanlist = ReadBooksOutOnLoanFromCSV();
             booksoutonloanlist.Sort();
-            //reads all BooksOutOnLoan from database
             foreach (var bol in booksoutonloanlist)
             {
                 Console.WriteLine(bol);
                 Console.WriteLine("|___________________________________________|");
             }
+            AddAllBooksOutOnLoan(booksoutonloanlist);
+            //reads all BooksOutOnLoan from database
             Console.WriteLine("|__________Reading BooksOutOnLoan From DB___|" + "\n");
             Console.WriteLine(dbOp.ReadAll<BooksOutOnLoan>());
         }
+
+
+
+
+
+
         static List<Users> ReadUsersFromCSV()
         {
             Console.WriteLine("Source Dir: " + ProjectRoot.Root + Path.DirectorySeparatorChar + "Data" + Path.DirectorySeparatorChar + "Users.csv");
@@ -307,7 +327,7 @@ namespace QueryBuilder
                     command.CommandType = System.Data.CommandType.Text;
 
                     command.Parameters.AddWithValue("$Id", bol.Id).SqliteType = SqliteType.Integer;
-                    command.Parameters.AddWithValue("BookId", bol.BookId).SqliteType = SqliteType.Text;
+                    command.Parameters.AddWithValue("$BookId", bol.BookId).SqliteType = SqliteType.Text;
 
 
                     command.ExecuteNonQuery();
@@ -326,7 +346,7 @@ namespace QueryBuilder
                 connection.Open();
                 var commandText =
                     @"
-                            INSERT INTO Users
+                            INSERT INTO Categories
                             VALUES($Id, $Name)
                         ";
                 using (var command = new SqliteCommand(commandText, connection))
