@@ -62,7 +62,7 @@ namespace QueryBuilder
             Console.WriteLine("|__________Reading Books From DB____________|" + "\n");
             Console.WriteLine(dbOp.ReadAll<Books>());
 
-            
+
             //reads Authors.csv
             Console.WriteLine("|__________Reading Author.csv________________|" + "\n");
             var authorlist = ReadAuthorFromCSV();
@@ -281,7 +281,7 @@ namespace QueryBuilder
                     command.Parameters.AddWithValue("$Id", b.Id).SqliteType = SqliteType.Integer;
                     command.Parameters.AddWithValue("$UserName", b.Title).SqliteType = SqliteType.Text;
                     command.Parameters.AddWithValue("$UserAddress", b.Isbn).SqliteType = SqliteType.Text;
-                    
+
 
                     command.ExecuteNonQuery();
                     connection.Close();
@@ -335,7 +335,7 @@ namespace QueryBuilder
 
                     command.Parameters.AddWithValue("$Id", c.Id).SqliteType = SqliteType.Integer;
                     command.Parameters.AddWithValue("$Name", c.Name).SqliteType = SqliteType.Text;
-                  
+
 
                     command.ExecuteNonQuery();
                     connection.Close();
