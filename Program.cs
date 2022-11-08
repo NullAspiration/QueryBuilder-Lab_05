@@ -259,7 +259,7 @@ namespace QueryBuilder
                     command.Parameters.AddWithValue("$SurName", a.SurName).SqliteType = SqliteType.Text;
 
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
 
@@ -430,7 +430,7 @@ namespace QueryBuilder
                 {
                     command.CommandType = System.Data.CommandType.Text;
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
         }
@@ -443,7 +443,7 @@ namespace QueryBuilder
                 {
                     command.CommandType = System.Data.CommandType.Text;
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
         }
@@ -456,7 +456,7 @@ namespace QueryBuilder
                 {
                     command.CommandType = System.Data.CommandType.Text;
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
         }
@@ -469,7 +469,7 @@ namespace QueryBuilder
                 {
                     command.CommandType = System.Data.CommandType.Text;
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
         }
@@ -482,7 +482,7 @@ namespace QueryBuilder
                 {
                     command.CommandType = System.Data.CommandType.Text;
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
         }
@@ -503,7 +503,7 @@ namespace QueryBuilder
                 {
                     command.CommandType = System.Data.CommandType.Text;
                     command.ExecuteNonQuery();
-                    connection.Close();
+                    connection.Dispose();
                 }
             }
         }
